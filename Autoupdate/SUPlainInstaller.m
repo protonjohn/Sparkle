@@ -269,18 +269,6 @@
     SUHost *updateHost = [[SUHost alloc] initWithBundle:bundle];
     NSString *updateVersion = [updateHost objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
     
-    id<SUVersionComparison> comparator = [[SUStandardVersionComparator alloc] init];
-    if (!updateVersion || [comparator compareVersion:hostVersion toVersion:updateVersion] == NSOrderedDescending) {
-        
-        if (error != NULL) {
-            NSString *errorMessage = [NSString stringWithFormat:@"For security reasons, updates that downgrade version of the application are not allowed. Refusing to downgrade app from version %@ to %@. Aborting update.", hostVersion, updateVersion];
-            
-            *error = [NSError errorWithDomain:SUSparkleErrorDomain code:SUDowngradeError userInfo:@{ NSLocalizedDescriptionKey: errorMessage }];
-        }
-        
-        return NO;
-    }
-    
     return YES;
 }
 
